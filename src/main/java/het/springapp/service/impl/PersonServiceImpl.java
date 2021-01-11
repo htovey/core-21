@@ -33,9 +33,9 @@ public class PersonServiceImpl implements PersonService {
 		return personDao.findPersonById(userId);
 	}
 	
-//	public List<Person> findPersonsByType(String personType) {
-//		return personDao.(personType);
-//	}
+	public List<Person> findPersonsByAdminId(String adminId) {
+		return personDao.findPersonsByAdminId(adminId);
+	}
 //	
 //	public String findByUserName(String uname) {
 //		return personDao.findByUserName(uname);

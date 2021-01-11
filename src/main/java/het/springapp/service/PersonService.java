@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public interface PersonService {
 	public Person findByPersonId(String userId);
 	
-	//public List<Person> findPersonsByType(String personType);
+	public List<Person> findPersonsByAdminId(String adminId);
 	
 	//public List<Person> findAll();
 	

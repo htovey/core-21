@@ -46,6 +46,23 @@ public class CoreController {
 		this.personService = personService;
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ResponseEntity <String> login(HttpServletRequest request) throws JSONException {
+		String userId = getUserId(request);
+		String respStatus = "success";
+		HttpStatus status = HttpStatus.OK;
+		
+		if (userId == null) {
+			respStatus =  "error";
+			status = HttpStatus.FORBIDDEN;
+		} 
+		
+		JSONObject json = new JSONObject();
+		json.put("responseStatus", respStatus);
+		
+		return new ResponseEntity<String>(json.toString(), status);		
+	}
+	
 	@RequestMapping(value = "/notes", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody List<Map<String, String>>notes(HttpServletRequest request) {
 		String userId = getUserId(request);
@@ -64,23 +81,6 @@ public class CoreController {
 		}
 		
 		return noteList;
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ResponseEntity <String> login(HttpServletRequest request) throws JSONException {
-		String userId = getUserId(request);
-		String respStatus = "success";
-		HttpStatus status = HttpStatus.OK;
-		
-		if (userId == null) {
-			respStatus =  "error";
-			status = HttpStatus.FORBIDDEN;
-		} 
-		
-		JSONObject json = new JSONObject();
-		json.put("responseStatus", respStatus);
-		
-		return new ResponseEntity<String>(json.toString(), status);		
 	}
 	
 	@RequestMapping(value = "/note", method = RequestMethod.POST, produces="text/html", consumes="application/json")
