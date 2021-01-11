@@ -21,3 +21,10 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/target/
+/angular_spring.txt
+/log.txt
+/log.txt.2021-01-03.0.gz
+/log.txt.2021-01-04.0.gz
+/log.txt.2021-01-05.0.gz
+/log.txt.2021-01-09.0.gz

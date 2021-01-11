@@ -3,19 +3,13 @@ package het.springapp.dao.impl;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import het.springapp.dao.PersonDao;
+import het.springapp.model.Note;
 import het.springapp.model.Person;
 
 @Repository("personDao")
@@ -23,7 +17,7 @@ import het.springapp.model.Person;
 public class PersonDaoImpl implements PersonDao {
 
 	@Autowired
-	private EntityManagerFactory emf;
+	private EntityManager manager;
 
 	public void persistPerson(Person person) {
 		getSession().persist(person);
@@ -32,6 +26,15 @@ public class PersonDaoImpl implements PersonDao {
 	public Person findPersonById(String id) {
 		return (Person) getSession().get(Person.class, id);
 	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public List<Person> findPersonsByAdminId(String adminId) {
+		Session session = getSession();
+		Query query = session.getNamedQuery("Person.findPersonsByAdminId");
+		query.setParameter("admin_id", adminId);
+		List<Person> personList = query.list();
+		return personList;
+}
 
 	public void updatePerson(Person person) {
 		getSession().update(person);
@@ -43,7 +46,7 @@ public class PersonDaoImpl implements PersonDao {
 	}
 	
 	private Session getSession() {
-		return emf.unwrap(Session.class);
+		return manager.unwrap(Session.class);
 	}
 	
 //	private EntityManager em;

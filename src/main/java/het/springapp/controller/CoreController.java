@@ -16,6 +16,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +46,23 @@ public class CoreController {
 		this.personService = personService;
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ResponseEntity <String> login(HttpServletRequest request) throws JSONException {
+		String userId = getUserId(request);
+		String respStatus = "success";
+		HttpStatus status = HttpStatus.OK;
+		
+		if (userId == null) {
+			respStatus =  "error";
+			status = HttpStatus.FORBIDDEN;
+		} 
+		
+		JSONObject json = new JSONObject();
+		json.put("responseStatus", respStatus);
+		
+		return new ResponseEntity<String>(json.toString(), status);		
+	}
+	
 	@RequestMapping(value = "/notes", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody List<Map<String, String>>notes(HttpServletRequest request) {
 		String userId = getUserId(request);
@@ -60,18 +81,6 @@ public class CoreController {
 		}
 		
 		return noteList;
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.GET, produces="application/json")
-    public @ResponseBody String login(HttpServletRequest request) {
-		String userId = getUserId(request);
-		
-		if (userId != null) {
-			//new note
-			return "success";
-		} 
-		
-		return "no user id on request";		
 	}
 	
 	@RequestMapping(value = "/note", method = RequestMethod.POST, produces="text/html", consumes="application/json")
