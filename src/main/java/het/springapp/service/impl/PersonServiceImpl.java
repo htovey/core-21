@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 import het.springapp.model.Person;
@@ -15,22 +17,30 @@ import het.springapp.service.PersonService;
 
 public class PersonServiceImpl implements PersonService {
 
-	private PersonDao personDao;
-	
 	@Autowired
+	PersonDao personDao;
+	
+	
 	public PersonServiceImpl(PersonDao personDao) {
 		this.personDao = personDao;
 	}
 	
 	public PersonServiceImpl() {}
 	
-	@Transactional(propagation=Propagation.REQUIRED, readOnly=true)
-	public void create(Person person) {
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
+	public void create(Person person, String userName) {
+		person.setSaveDate(new Date(System.currentTimeMillis()));
+		person.setId(null);
+		person.setUserName(userName);
 		personDao.persistPerson(person);
 	}
 	
-	public Person findByPersonId(String userId) {
-		return personDao.findPersonById(userId);
+	public Person findByPersonId(String personId) {
+		return personDao.findPersonById(personId);
+	}
+	
+	public Person findByUserName(String userName) {
+		return personDao.findPersonByUserName(userName);
 	}
 	
 	public List<Person> findPersonsByAdminId(String adminId) {
@@ -49,7 +59,9 @@ public class PersonServiceImpl implements PersonService {
 //		return personDao.findByLastName(lname);
 //	}
 	
+	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
 	public void update(Person person) {
+		person.setSaveDate(new Date(System.currentTimeMillis()));
 		personDao.updatePerson(person);
 	}
 

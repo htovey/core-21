@@ -44,7 +44,7 @@ public class UserDetailsAdapter implements UserDetails{
 
     @Override
     public String getUsername() {
-        return user.getUserId();
+        return user.getUserName();
     }
 
     @Override
