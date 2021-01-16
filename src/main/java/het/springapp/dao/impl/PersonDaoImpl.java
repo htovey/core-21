@@ -9,11 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import het.springapp.dao.PersonDao;
-import het.springapp.model.Note;
 import het.springapp.model.Person;
 
 @Repository("personDao")
-
 public class PersonDaoImpl implements PersonDao {
 
 	@Autowired
@@ -37,7 +35,7 @@ public class PersonDaoImpl implements PersonDao {
 }
 
 	public void updatePerson(Person person) {
-		getSession().update(person);
+		getSession().saveOrUpdate(person);
 
 	}
 	public void deletePerson(Person person) {
@@ -47,6 +45,15 @@ public class PersonDaoImpl implements PersonDao {
 	
 	private Session getSession() {
 		return manager.unwrap(Session.class);
+	}
+
+	@Override
+	public Person findPersonByUserName(String userName) {
+		Session session = getSession();
+		Query query = session.getNamedQuery("Person.findPersonByUserName");
+		query.setParameter("user_name", userName);
+		Person person = (Person) query.getSingleResult();
+		return person;
 	}
 	
 //	private EntityManager em;

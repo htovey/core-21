@@ -24,16 +24,19 @@ import org.apache.commons.logging.LogFactory;
 @Table(name = "user")
 
 @NamedQueries({
-    @NamedQuery(name="User.authenticate", query="SELECT u FROM User u WHERE u.userId = :USER_ID and u.password = :PASSWORD"),
-    @NamedQuery(name="User.findUser", query="SELECT u FROM User u WHERE u.userId = :USER_ID")
+    @NamedQuery(name="User.authenticate", query="SELECT u FROM User u WHERE u.userName = :user_name and u.password = :password"),
+    @NamedQuery(name="User.findUser", query="SELECT u FROM User u WHERE u.userName = :user_name")
 })
 
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Column(name = "user_id", nullable = false)
-    private String userId;
+    @Column(name = "id", nullable = false)
+    private String id;
+    
+    @Column(name = "user_name", nullable = false)
+    private String userName;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -46,18 +49,25 @@ public class User implements Serializable {
     
     public User(String [] values) {
         Log log = LogFactory.getLog(User.class);
-        setUserId(values[0]);
-        setPassword(values[1]);
+        setUserName(values[1]);
+        setPassword(values[2]);
         log.info("converting json object to user for userId "+values[0]);
     }
 
-    public String getUserId() {
-            return userId;
+    public String getId() {
+            return id;
     }
 
-    public void setUserId(String userId) {
-            this.userId = userId;
+    public void setId(String id) {
+            this.id = id;
     }
+    public String getUserName() {
+        return userName;
+}
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+	}
 
     public String getPassword() {
         return password;

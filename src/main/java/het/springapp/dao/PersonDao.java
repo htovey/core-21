@@ -8,7 +8,9 @@ import het.springapp.model.Person;
 public interface PersonDao {
 	void persistPerson(Person person);
 	  
-	Person findPersonById(String userId);
+	Person findPersonById(String personId);
+	
+	Person findPersonByUserName(String userName);
 	  
 	void updatePerson(Person person);
 	  
