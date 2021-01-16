@@ -1,6 +1,7 @@
 package het.springapp.controller;
 
 import het.springapp.model.Note;
+import het.springapp.model.Person;
 import het.springapp.model.User;
 import het.springapp.service.NoteService;
 import het.springapp.service.PersonService;
@@ -48,16 +49,22 @@ public class CoreController {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
     public ResponseEntity <String> login(HttpServletRequest request) throws JSONException {
-		String userId = getUserId(request);
+		String userName = getUserName(request);
 		String respStatus = "success";
 		HttpStatus status = HttpStatus.OK;
+		JSONObject json = new JSONObject();
 		
-		if (userId == null) {
+		if (userName == null) {
 			respStatus =  "error";
 			status = HttpStatus.FORBIDDEN;
-		} 
+		} else {
+			Person person = personService.findByUserName(userName);
+			json.put("userName", userName);
+			json.put("id", person.getId());
+			json.put("fName", person.getfName());
+			json.put("lName", person.getlName());
+		}
 		
-		JSONObject json = new JSONObject();
 		json.put("responseStatus", respStatus);
 		
 		return new ResponseEntity<String>(json.toString(), status);		
@@ -65,7 +72,7 @@ public class CoreController {
 	
 	@RequestMapping(value = "/notes", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody List<Map<String, String>>notes(HttpServletRequest request) {
-		String userId = getUserId(request);
+		String userId = getUserName(request);
 		log.info("getting notes for "+userId);
 		List<Note> noteListFromDb = noteService.findNotesByPerson(userId);
 		
@@ -85,7 +92,7 @@ public class CoreController {
 	
 	@RequestMapping(value = "/note", method = RequestMethod.POST, produces="text/html", consumes="application/json")
     public @ResponseBody String note(@RequestBody Note note, HttpServletRequest request) {
-		String userId = getUserId(request);
+		String userId = getUserName(request);
 		
 		if (note.getNoteId() == null) {
 			//new note
@@ -110,9 +117,9 @@ public class CoreController {
 		return "success";
 	}
 	
-	private String getUserId(HttpServletRequest request) {
+	private String getUserName(HttpServletRequest request) {
 		Principal principal = request.getUserPrincipal();
-		String userId = principal.getName();
-		return userId;
+		String userName = principal.getName();
+		return userName;
 	}
 }

@@ -1,14 +1,17 @@
 package het.springapp.service;
 
-import het.springapp.model.Person;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import het.springapp.model.Person;
+
 @Service
 public interface PersonService {
 	public Person findByPersonId(String userId);
+	
+	public Person findByUserName(String userName);
 	
 	public List<Person> findPersonsByAdminId(String adminId);
 	
@@ -20,7 +23,7 @@ public interface PersonService {
 	
 	//public Person findByLastName(String lname);
 	
-	public void create(Person person);
+	public void create(Person person, String userName);
 	
 	public void update(Person person);
 	

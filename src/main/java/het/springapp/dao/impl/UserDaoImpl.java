@@ -21,13 +21,13 @@ public class UserDaoImpl implements UserDao {
     
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     
-    public User login(String userId, String password) {
+    public User login(String userName, String password) {
      
         //String hashedPassword = passwordEncoder.encode(password);
         
         Session session = getSession();
         Query query = session.getNamedQuery("User.authenticate");
-        query.setParameter("user_id", userId);
+        query.setParameter("user_name", userName);
         query.setParameter("password", password);
         
         User user = (User) query.uniqueResult();
@@ -35,8 +35,11 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
     
-    public User getUser(String userId) {
-        return (User) getSession().get(User.class, userId);
+    public User getUser(String userName) {
+       Query query = getSession().getNamedQuery("User.findUser");
+       query.setParameter("user_name", userName);
+       User user = (User) query.uniqueResult();
+       return user;
     }
     
     private Session getSession() {

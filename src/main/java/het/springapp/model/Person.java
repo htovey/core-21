@@ -19,10 +19,11 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "person")
+@Table(name = "PERSON")
 
 @NamedQueries({
-	@NamedQuery(name="Person.findPersonsByAdminId", query="SELECT p FROM Person p WHERE p.adminId = :admin_id")
+	//@NamedQuery(name="Person.findPersonsByAdminId", query="SELECT p FROM Person p WHERE p.adminId = :admin_id"),
+	@NamedQuery(name="Person.findPersonByUserName", query="SELECT p FROM Person p where p.userName = :user_name")
 })
 
 public class Person implements Serializable {
@@ -32,13 +33,13 @@ public class Person implements Serializable {
 	  	@Id
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  	@Column(name = "id")
-	    private Integer id;
+	    private String id;
 	  	
-	  	@Column(name = "user_id")
-	    private String userId;
+	  	@Column(name = "user_name")
+	    private String userName;
 	  	
-	  	@Column(name = "admin_id")
-	    private String adminId;
+//	  	@Column(name = "admin_id")
+//	    private String adminId;
 	  	
 	    @Column(name = "fname")
 	    private String fName;
@@ -46,39 +47,38 @@ public class Person implements Serializable {
 	    @Column(name="lname")
 	  	private String lName;
 	    
-	    @Column(name="create_dt", updatable = false)
-	    private Date createDate;
+//	    @Column(name="create_dt", updatable = false)
+//	    private Date createDate;
 	    
 	  	@Column(name="save_dt")
 	    private Date saveDate;
 	   
-	  	public Person () {}
+	  	public Person () {}	  	
 	  	
-	  	public Person (String[] values) {
-	  		 
-	  		Log log = LogFactory.getLog(Note.class);
-	  		setfName(values[1].toString());
-	  		setlName(values[2].toString());
-	  		setAdminId(values[3]);
-	  		log.info("converting person for "+values[2].toString());
-	  		
-	  	}
 		
-		public String getUserId() {
-			return userId;
+		public String getId() {
+			return id;
 		}
 
-		public void setUserId(String userId) {
-			this.userId = userId;
+		public void setId(String id) {
+			this.id = id;
 		}
 
-		public Date getCreateDate() {
-			return createDate;
+		public String getUserName() {
+			return userName;
 		}
 
-		public void setCreateDate(Date createDate) {
-			this.createDate = createDate;
+		public void setUserName(String userName) {
+			this.userName = userName;
 		}
+//
+//		public Date getCreateDate() {
+//			return createDate;
+//		}
+//
+//		public void setCreateDate(Date createDate) {
+//			this.createDate = createDate;
+//		}
 
 		public Date getSaveDate() {
 			return saveDate;
@@ -88,13 +88,13 @@ public class Person implements Serializable {
 			this.saveDate = saveDate;
 		}
 
-		public String getAdminId() {
-			return adminId;
-		}
-
-		public void setAdminId(String adminId) {
-			this.adminId = adminId;
-		}
+//		public String getAdminId() {
+//			return adminId;
+//		}
+//
+//		public void setAdminId(String adminId) {
+//			this.adminId = adminId;
+//		}
 
 		public String getfName() {
 			return fName;
