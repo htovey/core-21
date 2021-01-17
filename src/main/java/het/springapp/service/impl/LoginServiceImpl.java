@@ -20,7 +20,8 @@ public class LoginServiceImpl implements LoginService {
     
     @Transactional(propagation=Propagation.REQUIRED, readOnly=false)
     public User login(String userId, String password) throws Exception {
-       return userDao.login(userId, password);
+       //return userDao.login(userId, password)
+    	return null;
     }
 
 }

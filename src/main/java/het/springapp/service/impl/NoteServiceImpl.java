@@ -16,7 +16,6 @@ import het.springapp.model.Note;
 import het.springapp.service.NoteService;
 
 @Service("noteService")
-
 public class NoteServiceImpl implements NoteService {
 	
 	@Autowired

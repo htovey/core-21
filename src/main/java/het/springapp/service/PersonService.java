@@ -23,7 +23,7 @@ public interface PersonService {
 	
 	//public Person findByLastName(String lname);
 	
-	public void create(Person person, String userName);
+	public void create(Person person);
 	
 	public void update(Person person);
 	
