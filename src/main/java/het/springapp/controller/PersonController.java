@@ -24,9 +24,9 @@ public class PersonController {
 	@Autowired
 	UserService userService;
 
-	public final Log log = LogFactory.getLog(CoreController.class);
+	public final Log log = LogFactory.getLog(PersonController.class);
 	
-	@RequestMapping(value = "/person", method = RequestMethod.POST, produces="text/html", consumes="application/json")
+	@RequestMapping(path = "/person", method = RequestMethod.POST, produces="application/json", consumes="application/json")
     public @ResponseBody String person(@RequestBody Person person, HttpServletRequest request) {
 		
 		if (person.getId().equals("")) {

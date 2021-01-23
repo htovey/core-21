@@ -34,6 +34,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void persistUser(User user) {
+
 		getSession().persist(user);
 	}
 
