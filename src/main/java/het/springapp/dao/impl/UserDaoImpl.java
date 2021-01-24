@@ -8,6 +8,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import het.springapp.dao.UserDao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import org.hibernate.Query;
@@ -19,22 +21,6 @@ public class UserDaoImpl implements UserDao {
     @Autowired(required = true)
     private EntityManager manager;
     
-    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-    
-    public User login(String userName, String password) {
-     
-        //String hashedPassword = passwordEncoder.encode(password);
-        
-        Session session = getSession();
-        Query query = session.getNamedQuery("User.authenticate");
-        query.setParameter("user_name", userName);
-        query.setParameter("password", password);
-        
-        User user = (User) query.uniqueResult();
-        
-        return user;
-    }
-    
     public User getUser(String userName) {
        Query query = getSession().getNamedQuery("User.findUser");
        query.setParameter("user_name", userName);
@@ -45,4 +31,27 @@ public class UserDaoImpl implements UserDao {
     private Session getSession() {
     	return manager.unwrap(Session.class);
     }
+
+	@Override
+	public void persistUser(User user) {
+
+		getSession().persist(user);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		getSession().saveOrUpdate(user);
+	}
+
+	@Override
+	public void deleteUser(String userName) {
+		User user = getUser(userName);
+		getSession().delete(user);
+	}
+
+	@Override
+	public List<User> findUsersByAdminId(String adminId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -10,9 +10,12 @@ package het.springapp.model;
  * @author heather
  */
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -32,6 +35,7 @@ public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private String id;
     
@@ -42,7 +46,16 @@ public class User implements Serializable {
     private String password;
     
     @Column(name = "role_id", nullable = false)
-    private int roledId;
+    private int roleId;
+    
+    @Column(name = "admin_id")
+    private int adminId;
+    
+    @Column(name = "create_dt", nullable = false)
+    private Date createDt;
+    
+    @Column(name="save_dt")
+    private Date saveDate;
     
     public User() {
     }
@@ -77,11 +90,35 @@ public class User implements Serializable {
         this.password = password;
     }
 
-	public int getRoledId() {
-		return roledId;
+	public int getRoleId() {
+		return roleId;
 	}
 
-	public void setRoledId(int roledId) {
-		this.roledId = roledId;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public int getAdminId() {
+		return adminId;
+	}
+
+	public void setAdminId(int adminId) {
+		this.adminId = adminId;
+	}
+
+	public Date getCreateDt() {
+		return createDt;
+	}
+
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+
+	public Date getSaveDate() {
+		return saveDate;
+	}
+
+	public void setSaveDate(Date saveDate) {
+		this.saveDate = saveDate;
 	}
 }
