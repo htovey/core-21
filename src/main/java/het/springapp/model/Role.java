@@ -22,8 +22,7 @@ import org.apache.commons.logging.LogFactory;
 @Table(name = "role")
 
 @NamedQueries({
-   @NamedQuery(name="User.authenticate", query="SELECT u FROM User u WHERE u.roleName = :role_name and u.bizType = :bizType"),
-   @NamedQuery(name="User.findUser", query="SELECT u FROM User u WHERE u.roleName = :role_name")
+   @NamedQuery(name="Role.findRolesByBizType", query="SELECT r FROM Role r WHERE r.bizType = :bizType")
 })
 public class Role {
    private static final long serialVersionUID = 1L;
