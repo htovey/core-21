@@ -1,5 +1,6 @@
 package het.springapp.biz.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import het.springapp.biz.model.Biz;
 
@@ -11,7 +12,7 @@ public interface BizService {
 	
 	public void create(Biz biz);
 	
-	public void update(Biz biz);
+	public void update(Biz biz) throws SQLException;
 	
 	public void delete(Integer id);
 	

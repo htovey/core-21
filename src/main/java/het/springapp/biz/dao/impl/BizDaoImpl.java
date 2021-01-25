@@ -1,5 +1,6 @@
 package het.springapp.biz.dao.impl;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,6 +8,7 @@ import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
 
 import het.springapp.biz.dao.BizDao;
@@ -31,6 +33,7 @@ public class BizDaoImpl implements BizDao {
 		//getSession().update("Biz", biz);
 		getSession().saveOrUpdate(biz);
 	}
+	
 	public void deleteBiz(Integer id) {
 		Biz biz = findBizById(id);
 		getSession().delete(biz);

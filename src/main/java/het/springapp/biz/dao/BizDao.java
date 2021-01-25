@@ -1,5 +1,6 @@
 package het.springapp.biz.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import het.springapp.biz.model.Biz;

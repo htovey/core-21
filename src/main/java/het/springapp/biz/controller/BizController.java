@@ -1,5 +1,6 @@
 package het.springapp.biz.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,8 +51,12 @@ public class BizController {
 		String msg = "success";
 		HttpStatus status = HttpStatus.OK;
 		
-		bizService.update(biz);
-		
+		try {
+			bizService.update(biz);
+		} catch(Exception ex) {
+			status = HttpStatus.NOT_ACCEPTABLE;
+			msg = "Attempt to update Biz failed.  Please try again.";
+		}
 		
 		return new ResponseEntity<String>(msg, status);				
 	}
