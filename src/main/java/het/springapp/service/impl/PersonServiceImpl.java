@@ -28,10 +28,9 @@ public class PersonServiceImpl implements PersonService {
 	public PersonServiceImpl() {}
 	
 	@Transactional(propagation=Propagation.REQUIRED, readOnly=false)
-	public void create(Person person, String userName) {
+	public void create(Person person) {
 		person.setSaveDate(new Date(System.currentTimeMillis()));
 		person.setId(null);
-		person.setUserName(userName);
 		personDao.persistPerson(person);
 	}
 	

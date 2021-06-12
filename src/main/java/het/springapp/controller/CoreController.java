@@ -5,6 +5,8 @@ import het.springapp.model.Person;
 import het.springapp.model.User;
 import het.springapp.service.NoteService;
 import het.springapp.service.PersonService;
+import het.springapp.service.UserService;
+import het.springapp.types.RoleType;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -37,17 +39,19 @@ public class CoreController {
 
 	private NoteService noteService;
 	private PersonService personService;
+	private UserService userService;
 	private boolean firstLoad = false;
 
 		
 	public final Log log = LogFactory.getLog(CoreController.class);
 	@Autowired
-	public CoreController(NoteService noteService, PersonService personService) {
+	public CoreController(NoteService noteService, PersonService personService, UserService userService) {
 		this.noteService = noteService;
 		this.personService = personService;
+		this.userService = userService;
 	}
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET, produces="application/json")
     public ResponseEntity <String> login(HttpServletRequest request) throws JSONException {
 		String userName = getUserName(request);
 		String respStatus = "success";
@@ -59,10 +63,25 @@ public class CoreController {
 			status = HttpStatus.FORBIDDEN;
 		} else {
 			Person person = personService.findByUserName(userName);
-			json.put("userName", userName);
-			json.put("id", person.getId());
-			json.put("fName", person.getfName());
-			json.put("lName", person.getlName());
+			User user = userService.findByUserName(userName);
+			RoleType roleType = userService.getRoleType(user.getRoleId());
+			JSONObject jsonUser = new JSONObject();
+			JSONObject jsonPerson = new JSONObject();
+			
+			if (user != null) {
+				jsonUser.put("userName", userName);
+				jsonUser.put("password", user.getPassword());
+				jsonUser.put("roleType", roleType);
+				jsonUser.put("userId", user.getId());
+				json.put("user", jsonUser);
+			}
+			
+			if (person != null) {
+				jsonPerson.put("id", person.getId());
+				jsonPerson.put("fName", person.getfName());
+				jsonPerson.put("lName", person.getlName());
+				json.put("person", jsonPerson);
+			}
 		}
 		
 		json.put("responseStatus", respStatus);
