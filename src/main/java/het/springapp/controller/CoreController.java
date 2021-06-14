@@ -107,6 +107,7 @@ public class CoreController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET, produces="application/json")
     public ResponseEntity <String> login(HttpServletRequest request) throws JSONException {
 		String userName = getUserName(request);
+		log.info("Login request for user "+userName);
 		String respStatus = "success";
 		MultiValueMap<String, String> headers = new HttpHeaders();
 		HttpStatus status = HttpStatus.OK;
@@ -117,7 +118,7 @@ public class CoreController {
 			status = HttpStatus.FORBIDDEN;
 		} else {
 			User user = userService.findByUserName(userName);
-			Person person = personService.findByUserId(user.getId());
+			Person person = personService.findByUserName(user.getUserName());
  			Role role = roleService.findRoleById(user.getRoleId());
  			headers.add(HttpHeaders.AUTHORIZATION,
                     jwtTokenUtil.generateAccessToken(user));
@@ -139,7 +140,7 @@ public class CoreController {
 				jsonPerson.put("id", person.getId());
 				jsonPerson.put("fName", person.getfName());
 				jsonPerson.put("lName", person.getlName());
-				jsonPerson.put("userId", person.getUserId());
+				jsonPerson.put("userId", person.getUserName());
 				json.put("person", jsonPerson);
 			}
 		}

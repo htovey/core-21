@@ -11,13 +11,11 @@ import het.springapp.model.Person;
 public interface PersonService {
 	public Person findByPersonId(String id);
 	
-	public Person findByUserId(String userId);
-	
 	public List<Person> findPersonsByAdminId(String adminId);
 	
 	//public List<Person> findAll();
 	
-	//public String findByUserName(String uname);
+	public Person findByUserName(String uname);
 	
 	//public Person findByFirstName(String fname);
 	

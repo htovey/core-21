@@ -45,12 +45,12 @@ public class PersonController {
 		String msg = "success";
 		HttpStatus status = HttpStatus.CREATED;
 		log.info("attempting to create "+person.getfName());
-		User user = userService.getUser(person.getUserId());
+		User user = userService.findByUserName(person.getUserName());
 		if (user == null) {
 			msg = "Error - no user exists for user name.";
 			status = HttpStatus.NOT_ACCEPTABLE;
 		} else {
-			person.setUserId(user.getId());
+			person.setUserName(user.getUserName());
 			personService.create(person);
 		}
 		return new ResponseEntity<String>(msg, status);
@@ -67,11 +67,11 @@ public class PersonController {
 	
 	@RequestMapping(value = "/persons", method = RequestMethod.GET, produces="application/json")
     public List<Map<String, String>> getPersonList(@RequestParam int bizId, @RequestParam String roleType, HttpServletRequest request) throws JSONException {
-		
+		log.info("Person List request for bizId "+bizId);
 		List<User> userList = userService.findUsersByBizIdRoleType(bizId, roleType);
 		
 		List<Person> personListFromDb = userList.stream()
-				.map(user -> personService.findByUserId(user.getId()))
+				.map(user -> personService.findByUserName(user.getUserName()))
 				.collect(Collectors.toList());			
 		
 		List<Map<String,String>> personList = new ArrayList<Map<String,String>>();
@@ -81,7 +81,7 @@ public class PersonController {
 			personMap.put("id", String.valueOf(person.getId()));
 			personMap.put("fName", person.getfName());
 			personMap.put("lName", person.getlName());
-			personMap.put("userId", person.getUserId());
+			personMap.put("userName", person.getUserName());
 			personMap.put("saveDate", person.getSaveDate().toString());
 			personList.add(personMap);
 		}

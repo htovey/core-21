@@ -29,7 +29,7 @@ public class RoleController {
 	
 	@RequestMapping(value = "/roles", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody List<Map<String, String>>roles(@RequestParam int bizId, HttpServletRequest request) {
-		
+		log.info("Role List request for bizId "+bizId);
 		List<Role> roleListData = roleService.findRolesByBizId(bizId);
 		List<Map<String,String>> roleList = new ArrayList<Map<String,String>>();
 		

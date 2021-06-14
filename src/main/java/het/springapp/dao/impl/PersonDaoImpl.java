@@ -52,10 +52,10 @@ public class PersonDaoImpl implements PersonDao {
 	}
 
 	@Override
-	public Person findPersonByUserId(String userId) {
+	public Person findPersonByUserName(String userName) {
 		Session session = getSession();
-		Query query = session.getNamedQuery("Person.findPersonByUserId");
-		query.setParameter("user_id", userId);
+		Query query = session.getNamedQuery("Person.findPersonByUserName");
+		query.setParameter("user_name", userName);
 		Person person = (Person) query.getSingleResult();
 		manager.close();
 		return person;

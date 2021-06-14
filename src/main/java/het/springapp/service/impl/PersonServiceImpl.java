@@ -37,18 +37,15 @@ public class PersonServiceImpl implements PersonService {
 	public Person findByPersonId(String personId) {
 		return personDao.findPersonById(personId);
 	}
-	
-	public Person findByUserId(String userId) {
-		return personDao.findPersonByUserId(userId);
-	}
+
 	
 	public List<Person> findPersonsByAdminId(String adminId) {
 		return personDao.findPersonsByAdminId(adminId);
 	}
-//	
-//	public String findByUserName(String uname) {
-//		return personDao.findByUserName(uname);
-//	}
+	
+	public Person findByUserName(String uname) {
+		return personDao.findPersonByUserName(uname);
+	}
 //	
 //	public Person findByFirstName(String fname) {
 //		return personDao.findByFirstName(fname);

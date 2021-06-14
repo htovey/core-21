@@ -10,11 +10,11 @@ public interface PersonDao {
 	  
 	Person findPersonById(String id);
 	
-	Person findPersonByUserId(String userId);
-	  
 	void updatePerson(Person person);
 	  
 	void deletePerson(Person person);
 
 	List<Person> findPersonsByAdminId(String adminId);
+
+	Person findPersonByUserName(String userName);
 }

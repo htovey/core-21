@@ -2,6 +2,8 @@ package het.springapp.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -30,8 +32,11 @@ public class UserController {
 	@Autowired
 	RoleService roleService;
 	
+	public final Log log = LogFactory.getLog(UserController.class);
+	
 	@RequestMapping(path = "/create", method = RequestMethod.POST, consumes="application/json", produces="application/json")
 	ResponseEntity<String> createUser(@RequestBody User user, HttpServletRequest request) {
+		log.info("Create request for user "+user.getUserName());
 		String msg = "success";
 		HttpStatus status = HttpStatus.CREATED;
 		if (userService.findByUserName(user.getUserName()) != null) {
@@ -46,6 +51,7 @@ public class UserController {
 	
 	@RequestMapping(path = "/update", method = RequestMethod.POST, consumes="application/json", produces="application/json")
 	ResponseEntity<String> updateUser(@RequestBody User user, HttpServletRequest request) {
+		log.info("Update request for user: "+user.getUserName());
 		String msg = "success";
 		HttpStatus status = HttpStatus.OK;
 		try {
@@ -60,6 +66,7 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.GET, consumes="application/json", produces="application/json")
 	ResponseEntity<String> getUser(@RequestParam String userName) throws JSONException {
+		log.info("GET request for user: "+userName);
 		String msg = "success";
 		HttpStatus status = HttpStatus.CREATED;
 		User user = userService.findByUserName(userName);

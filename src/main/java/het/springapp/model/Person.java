@@ -23,7 +23,7 @@ import javax.persistence.Table;
 
 @NamedQueries({
 	//@NamedQuery(name="Person.findPersonsByAdminId", query="SELECT p FROM Person p WHERE p.adminId = :admin_id"),
-	@NamedQuery(name="Person.findPersonByUserId", query="SELECT p FROM Person p where p.userId = :user_id")
+	@NamedQuery(name="Person.findPersonByUserName", query="SELECT p FROM Person p where p.userName = :user_name")
 })
 
 public class Person implements Serializable {
@@ -35,8 +35,8 @@ public class Person implements Serializable {
 	  	@Column(name = "id")
 	    private String id;
 	  	
-	  	@Column(name = "user_id")
-	    private String userId;
+	  	@Column(name = "user_name")
+	    private String userName;
 	  	
 //	  	@Column(name = "admin_id")
 //	    private String adminId;
@@ -64,12 +64,12 @@ public class Person implements Serializable {
 			this.id = id;
 		}
 
-		public String getUserId() {
-			return userId;
+		public String getUserName() {
+			return userName;
 		}
 
-		public void setUserId(String userId) {
-			this.userId = userId;
+		public void setUserName(String userName) {
+			this.userName = userName;
 		}
 //
 //		public Date getCreateDate() {
