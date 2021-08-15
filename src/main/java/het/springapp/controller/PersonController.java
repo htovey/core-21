@@ -90,12 +90,14 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces="application/json")
-	public @ResponseBody String deletePerson(@RequestParam int personId) {
+	public @ResponseBody String deletePerson(@RequestParam String userName) {
+		Person person = personService.findByUserName(userName);
+		personService.delete(person);
 		return "success";
 	}
 	
-	@RequestMapping(value= "/", method = RequestMethod.GET, produces="application/json")
-	public @ResponseEntity<String> getPerson(String userName) {
+	@RequestMapping(method = RequestMethod.GET, produces="application/json")
+	ResponseEntity<String> getPerson(@RequestParam String userName) throws JSONException {
 		log.info("GET request for user: "+userName);
 		String msg = "success";
 		HttpStatus status = HttpStatus.CREATED;
@@ -115,6 +117,4 @@ public class PersonController {
 		return new ResponseEntity<String>(msg, status);	
 
 	}
-}
-
 }
