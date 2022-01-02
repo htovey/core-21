@@ -93,4 +93,33 @@ public class PersonController {
 		
 		return personList;		
 	}
+	
+	@RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces="application/json")
+	public @ResponseBody String deletePerson(@RequestParam String userName) {
+		Person person = personService.findByUserName(userName);
+		personService.delete(person);
+		return "success";
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, produces="application/json")
+	ResponseEntity<String> getPerson(@RequestParam String userName) throws JSONException {
+		log.info("GET request for user: "+userName);
+		String msg = "success";
+		HttpStatus status = HttpStatus.CREATED;
+		Person person = personService.findByUserName(userName);
+		if (person == null) {
+			msg = "Error - person not found";
+			status = HttpStatus.NOT_ACCEPTABLE;
+		} else {
+			JSONObject jsonPerson = new JSONObject();	
+			jsonPerson.put("userName", userName);
+			jsonPerson.put("fName", person.getfName());
+			jsonPerson.put("lName", person.getlName());
+			jsonPerson.put("id", person.getId());
+			msg = jsonPerson.toString();
+		}
+		
+		return new ResponseEntity<String>(msg, status);	
+
+	}
 }
