@@ -66,9 +66,14 @@ public class PersonController {
 	}
 	
 	@RequestMapping(value = "/persons", method = RequestMethod.GET, produces="application/json")
-    public List<Map<String, String>> getPersonList(@RequestParam int bizId, @RequestParam String roleType, HttpServletRequest request) throws JSONException {
+    public List<Map<String, String>> getPersonList(@RequestParam int bizId, @RequestParam ArrayList<String> roleTypes, HttpServletRequest request) throws JSONException {
 		log.info("Person List request for bizId "+bizId);
-		List<User> userList = userService.findUsersByBizIdRoleType(bizId, roleType);
+		
+		List<User> userList = new ArrayList<User>();
+		
+		for(String role:  roleTypes) {
+			userList.add((User) userService.findUsersByBizIdRoleType(bizId, role));
+		}
 		
 		List<Person> personListFromDb = userList.stream()
 				.map(user -> personService.findByUserName(user.getUserName()))
