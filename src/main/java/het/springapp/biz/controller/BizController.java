@@ -83,7 +83,7 @@ public class BizController {
 	@RequestMapping(value = "/bizList", method = RequestMethod.GET, produces="application/json")
 	public @ResponseBody List<Map<String, String>>bizList(HttpServletRequest request) {
 		//String userId = getUserName(request);
-		//log.info("getting notes for "+userId);
+		log.debug("GET BIZ LIST");
 		List<Biz> bizListFromDb = bizService.findAll();
 		
 		List<Map<String,String>> bizList = new ArrayList<Map<String,String>>();

@@ -15,8 +15,6 @@ public interface UserService {
 	public void update(User user);
 	
 	public void delete(String userName);
-	
-	public List<User>findUsersByAdminId(String adminId);
 
 	List<User> findUsersByBizIdRoleType(int bizId, String roleType);
 

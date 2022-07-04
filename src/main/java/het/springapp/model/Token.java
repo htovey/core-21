@@ -18,7 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "persisten_logins")
+@Table(name = "persistent_logins")
 
 @NamedQueries({
 	@NamedQuery(name="Token.getToken", query="SELECT t FROM Token t WHERE t.userId = :USER_ID")

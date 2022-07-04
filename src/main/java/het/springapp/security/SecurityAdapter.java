@@ -65,10 +65,12 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter{
 		return new MyCorsFilter(corsConfigurationSource());
 	}
 	
-	@Bean 
-	MyCsrfFilter myCsrfFilter() {
-		return new MyCsrfFilter();
-	}
+	//disabled - JWT Tokens used instead
+	
+//	@Bean 
+//	MyCsrfFilter myCsrfFilter() {
+//		return new MyCsrfFilter();
+//	}
 	
 	@Bean
 	public DaoAuthenticationProvider authProvider() {
@@ -124,7 +126,7 @@ public class SecurityAdapter extends WebSecurityConfigurerAdapter{
 		.headers().disable()
 		.logout().disable()
 		.addFilterAt(myCorsFilter(), CorsFilter.class)	
-		.addFilterBefore(myCsrfFilter(), SecurityContextPersistenceFilter.class)
+		//.addFilterBefore(myCsrfFilter(), SecurityContextPersistenceFilter.class)
 		.exceptionHandling().authenticationEntryPoint(restAuthenticationEntryFailure)
 		.and()
 		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -6,26 +6,18 @@
 package het.springapp.security;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.CsrfTokenRepository;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
-import org.springframework.web.filter.OncePerRequestFilter;;
+import org.springframework.web.filter.CorsFilter;;
 
 /**
  *
@@ -64,7 +56,7 @@ public class MyCorsFilter extends CorsFilter {
     	response.setHeader("Access-Control-Allow-Credentials", "true");
     	response.setHeader("Access-Control-Allow-Origin", origin);
         response.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, authorization, Authorization, Connection, Content-Type, Accept, X-Requested-With, remember-me, x-csrf-token");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, Accept, authorization, Authorization, Connection, Content-Type, Accept, X-Requested-With, remember-me, x-csrf-token, should_not_filter");
         response.setHeader("Access-Control-Expose-Headers", "Origin, Accept, authorization, Authorization, TokenError");
         response.setHeader("Access-Control-Max-Age", "12000");
         

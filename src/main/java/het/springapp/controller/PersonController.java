@@ -72,7 +72,10 @@ public class PersonController {
 		List<User> userList = new ArrayList<User>();
 		
 		for(String role:  roleTypes) {
-			userList.add((User) userService.findUsersByBizIdRoleType(bizId, role));
+			List<User> roleUserList = userService.findUsersByBizIdRoleType(bizId, role);
+			for (User user: roleUserList) {
+				userList.add(user);
+			}
 		}
 		
 		List<Person> personListFromDb = userList.stream()

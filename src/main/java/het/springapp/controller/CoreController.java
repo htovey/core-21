@@ -132,7 +132,6 @@ public class CoreController {
 				jsonUser.put("roleId", user.getRoleId());
 				jsonUser.put("userId", user.getId());
 				jsonUser.put("bizId", user.getBizId());
-				jsonUser.put("adminId", user.getAdminId());
 				json.put("user", jsonUser);
 			}
 			

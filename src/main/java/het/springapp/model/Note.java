@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "NOTE")
+@Table(name = "note")
 
 @NamedQueries({
 	@NamedQuery(name="Note.findNotesByPerson", query="SELECT n FROM Note n WHERE n.userId = :USER_ID")

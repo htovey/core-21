@@ -23,6 +23,8 @@ public class MyCsrfFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
+		log.debug("REQUEST TYPE: "+request.getMethod());
+		log.debug("REQUEST URL: "+request.getRequestURI());
 		CsrfToken token = csrfTokenRepository().generateToken(request);
 		
 		log.debug("Headers: ");
